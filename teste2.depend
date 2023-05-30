@@ -1,0 +1,19 @@
+# depslib dependency file v1.0
+1685478421 source:c:\users\matheus\documents\teste2\main.c
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+	"./listaadj.h"
+
+1685478381 c:\users\matheus\documents\teste2\listaadj.h
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+	<limits.h>
+	"./fila.h"
+
+1685298191 c:\users\matheus\documents\teste2\fila.h
+	<stdio.h>
+	<malloc.h>
+	<stdbool.h>
+
