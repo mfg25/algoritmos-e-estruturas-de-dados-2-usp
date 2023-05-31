@@ -1,5 +1,5 @@
-#ifndef GRAFO_MATRIZADJ_H_INCLUDED
-#define GRAFO_MATRIZADJ_H_INCLUDED
+#ifndef LISTAADJ_H_INCLUDED
+#define LISTAADJ_H_INCLUDED
 
 #include <stdbool.h>
 
@@ -15,10 +15,20 @@ typedef struct{
     PONT fim;
 }FILA;
 
-typedef struct{
-    Peso mat[MAXNUMVERTICES+1][MAXNUMVERTICES+1];
+typedef struct ADJACENCIA{
+    int vertice;
+    Peso peso;
+    struct ADJACENCIA *prox;
+}ADJACENCIA;
+
+typedef struct vertice{
+    ADJACENCIA *cab;
+}VERTICE;
+
+typedef struct grafo{
     int numVertices;
     int numArestas;
+    VERTICE* adj;
 }GRAFO;
 
 void inicializarFila(FILA* f);
@@ -29,23 +39,22 @@ bool inserirNaFila(FILA* f, int reg);
 
 bool excluirDaFila(FILA* f, int* reg);
 
-bool verificaParametros(int v1, int v2, GRAFO grafo);
 
-bool inicializaGrafo(GRAFO* grafo, int nv);
+bool inicializaGrafo(GRAFO* gr, int nv);
 
-bool criaArestaNaoDirecionada(int v1, int v2, Peso peso, GRAFO* grafo);
+ADJACENCIA* criaAdj(int v, Peso peso);
+
+bool criaArestaNaoDirecionada(int v1, int v2, Peso peso, GRAFO* gr);
 
 int maxDist(GRAFO* gr, double dist[], bool mstSet[]);
 
-double* primMST(GRAFO* gr, double* dist, int* pai);
+void primMST(GRAFO* gr, double* dist, int* pai);
 
 double pegarAltura(double alturaMin);
 
-bool bfs(GRAFO* gr, int inicio, int fim, double* dist, int* pai);
+void bfs(GRAFO* gr, int inicio, int fim, double* dist, int* pai);
 
 double encontraAltura(GRAFO* gr, int pai[], double dist[], int inicio, int fim);
 
 
-
-
-#endif // GRAFO_MATRIZADJ_H_INCLUDED
+#endif // LISTAADJ_H_INCLUDED

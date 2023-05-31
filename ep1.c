@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include "./listaadj.h"
+#define MAXNUMVERTICES 100
+#include "./grafo_matrizadj.h"
+
 
 
 int main(int argc, char** argv)
@@ -43,6 +45,7 @@ int main(int argc, char** argv)
 
     GRAFO grFinal;
     inicializaGrafo(&grFinal, numVertices);
+
 
     for(int i = 0; i < numVertices; i++){
         criaArestaNaoDirecionada(pai[i], i, dist[i], &grFinal);

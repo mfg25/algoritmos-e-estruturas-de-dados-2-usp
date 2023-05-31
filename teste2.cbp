@@ -31,14 +31,21 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="fila.h">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="listaadj.h">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="main.c">
+		<Unit filename="ep1.c">
 			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="grafo_listaadj.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="grafo_listaadj.h">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="grafo_matrizadj.c">
+			<Option compilerVar="CC" />
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="grafo_matrizadj.h">
+			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Extensions>
 			<lib_finder disable_auto="1" />

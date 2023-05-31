@@ -1,10 +1,23 @@
-#ifndef LISTAADJ_H_INCLUDED
-#define LISTAADJ_H_INCLUDED
-
+#include <stdio.h>
+#include <stdlib.h>
 #include <stdbool.h>
+#include <limits.h>
+
+#define MAXNUMVERTICES 100
+#define AN -1
+
 
 typedef double Peso;
 
+typedef struct aux{
+    int reg;
+    struct aux* prox;
+}ELEMENTO, *PONT;
+
+typedef struct{
+    PONT inicio;
+    PONT fim;
+}FILA;
 
 typedef struct ADJACENCIA{
     int vertice;
@@ -21,6 +34,41 @@ typedef struct grafo{
     int numArestas;
     VERTICE* adj;
 }GRAFO;
+
+void inicializarFila(FILA* f){
+    f->inicio = NULL;
+    f->fim = NULL;
+}
+
+int numeroDeElementosFila(FILA* f){
+    PONT i = f->inicio;
+    int tam = 0;
+    while(i){
+        tam++;
+        i = i->prox;
+    }
+    return tam;
+}
+
+bool inserirNaFila(FILA* f, int reg){
+    PONT novo = (PONT) malloc(sizeof(ELEMENTO));
+    novo->reg = reg;
+    novo->prox = NULL;
+    if(f->inicio == NULL) f->inicio = novo;
+    else f->fim->prox = novo;
+    f->fim = novo;
+    return true;
+}
+
+bool excluirDaFila(FILA* f, int* reg){
+    if(f->inicio == NULL) return false;
+    *reg = f->inicio->reg;
+    PONT apagar = f->inicio;
+    f->inicio = f->inicio->prox;
+    free(apagar);
+    return true;
+}
+
 
 bool inicializaGrafo(GRAFO* gr, int nv) {
     gr->numVertices = nv;
@@ -58,19 +106,6 @@ bool criaArestaNaoDirecionada(int v1, int v2, Peso peso, GRAFO* gr){
     return true;
 }
 
-void imprimeLista(GRAFO* g){
-    printf("Numero de arestas: %d\nNumero de vertices: %d\n", g->numArestas, g->numVertices);
-    int i;
-    for(i = 0; i < g->numVertices; i++){
-        printf("v%d: ", i);
-        ADJACENCIA* iterador = g->adj[i].cab;
-        while(iterador){
-            printf("v%d(%.1f) ", iterador->vertice, iterador->peso);
-            iterador = iterador->prox;
-        }
-        printf("\n");
-    }
-}
 
 int maxDist(GRAFO* gr, double dist[], bool mstSet[]){
 
@@ -112,7 +147,7 @@ void primMST(GRAFO* gr, double* dist, int* pai) {
 
 double pegarAltura(double alturaMin){
     double i = 0;
-    while(alturaMin > i && i <= 4.5){
+    while(alturaMin >= i && i <= 4.5){
         i = i + 0.5;
     }
     return i - 0.5;
@@ -143,21 +178,6 @@ void bfs(GRAFO* gr, int inicio, int fim, double* dist, int* pai) {
     }
 }
 
-int menorDist(GRAFO* g, bool* aberto, double* d){
-    int i;
-    for(i = 0; i < g->numVertices; i++){
-        if(aberto[i]) break;
-    }
-    if(i == g->numVertices) return -1;
-    int menor = i;
-    for (i = menor+1; i < g->numVertices; i++){
-        if(aberto[i] && (d[menor] > d[i])){
-            menor = i;
-        }
-    }
-    return menor;
-}
-
 double encontraAltura(GRAFO* gr, int pai[], double dist[], int inicio, int fim) {
     int atual = fim;
     double alturaMin = pegarAltura(dist[atual]);
@@ -171,6 +191,3 @@ double encontraAltura(GRAFO* gr, int pai[], double dist[], int inicio, int fim) 
     }
     return alturaMin;
 }
-
-
-#endif // LISTAADJ_H_INCLUDED
