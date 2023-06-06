@@ -1,20 +1,7 @@
 # depslib dependency file v1.0
-1685479598 source:c:\users\matheus\documents\teste2\main.c
-	<stdio.h>
-	<stdlib.h>
-	<stdbool.h>
-	"./listaadj.h"
-
-1685480402 c:\users\matheus\documents\teste2\listaadj.h
-	<stdbool.h>
-
-1685480469 c:\users\matheus\documents\teste2\fila.h
-
-1685481344 source:c:\users\matheus\documents\teste2\listaaadj.c
+1685904828 source:c:\users\matheus\documents\teste2\grafo_listaadj.c
 	<stdio.h>
 	<stdlib.h>
 	<stdbool.h>
 	<limits.h>
-	"./fila.h"
-	"./listaadj.h"
 

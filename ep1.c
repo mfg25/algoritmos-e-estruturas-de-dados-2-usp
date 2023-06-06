@@ -1,10 +1,88 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <limits.h>
 #define MAXNUMVERTICES 100
-#include "./grafo_matrizadj.h"
+#include "./fila.c"
+#include "./grafo_listaadj.h"
 
+int maxDist(GRAFO* gr, double dist[], bool mstSet[]){
 
+    int maxValue = INT_MIN;
+    int max_index;
+
+    for(int v = 0; v < gr->numVertices; v++){
+        if(mstSet[v] == false && dist[v] > maxValue){
+            maxValue = dist[v];
+            max_index = v;
+        }
+    }
+    return max_index;
+}
+
+double pegarAltura(double alturaMin){
+    double i = 0;
+    while(alturaMin >= i && i <= 4.5){
+        i = i + 0.5;
+    }
+    return i - 0.5;
+}
+
+double encontraAltura(GRAFO* gr, int pai[], double dist[], int inicio, int fim) {
+    int atual = fim;
+    double alturaMin = pegarAltura(dist[atual]);
+    while (atual != inicio) {
+        if(dist[atual] < alturaMin){
+            alturaMin = pegarAltura(dist[atual]);
+
+        }
+
+        atual = pai[atual];
+    }
+    return alturaMin;
+}
+
+void bfs(GRAFO* gr, int inicio, int fim, double* dist, int* pai){
+    bool visitado[gr->numVertices];
+    FILA q;
+    inicializarFila(&q);
+    visitado[inicio] = true;
+
+    inserirNaFila(&q, inicio);
+
+    while(numeroDeElementosFila(&q) != 0){
+        int reg;
+        excluirDaFila(&q, &reg);
+        for(int i = 0; i < gr->numVertices; i++){
+            if(existeAresta(reg, i, gr) && !visitado[i]){
+                dist[i] = pegaPesoAresta(reg, i, gr);
+                pai[i] = reg;
+                visitado[i] = true;
+                inserirNaFila(&q, i);
+            }
+        }
+    }
+}
+
+void primMST(GRAFO* gr, double* dist, int* pai){
+    bool mstSet[gr->numVertices];
+    for(int i = 0; i < gr->numVertices; i++){
+        dist[i] = INT_MIN;
+        mstSet[i] = false;
+    }
+    dist[0] = 0;
+    pai[0] = 0;
+    for(int i = 0; i < gr->numVertices-1; i++){
+        int u = maxDist(gr, dist, mstSet);
+        mstSet[u] = true;
+        for(int v = 0; v < gr->numVertices; v++){
+            if(existeAresta(u, v, gr) && mstSet[v] == false && pegaPesoAresta(u, v, gr) > dist[v]){
+                pai[v] = u;
+                dist[v] = pegaPesoAresta(u, v, gr);
+            }
+        }
+    }
+}
 
 int main(int argc, char** argv)
 {

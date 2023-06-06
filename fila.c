@@ -1,9 +1,17 @@
 #include <stdio.h>
-#include <malloc.h>
+#include <stdlib.h>
 #include <stdbool.h>
-#define MAXNUMVERTICES 100
-#define AN -1
-#include "./fila.h"
+
+typedef struct aux{
+    int reg;
+    struct aux* prox;
+}ELEMENTO, *PONT;
+
+typedef struct{
+    PONT inicio;
+    PONT fim;
+}FILA;
+
 
 void inicializarFila(FILA* f){
     f->inicio = NULL;

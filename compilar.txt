@@ -3,16 +3,19 @@ gcc -o main.exe main.c grafo_matrizadj.h fila.h
 gcc -o main.exe main.c listaadj.h fila.h
 
 ep1_matriz_13672860.exe: grafo_matrizadj.o ep1.o 
-	gcc -o ep1_matriz_13672860.exe grafo_matrizadj.o ep1.o 
+	gcc -o ep1_matriz_13672860.exe grafo_matrizadj.o fila.o ep1.o 
 
 ep1_lista_13672860.exe: grafo_listaadj.o ep1.o
-	gcc -o ep1_lista_13672860.exe grafo_listaadj.o ep1.o 
+	gcc -o ep1_lista_13672860.exe grafo_listaadj.o fila.o ep1.o 
 
 grafo_matrizadj.o: grafo_matrizadj.c grafo_matrizadj.h
 	gcc -c grafo_matrizadj.c
 
 grafo_listaadj.o: grafo_listaadj.c grafo_listaadj.h
 	gcc -c grafo_listaadj.c
+
+fila.o: fila.c
+	gcc -c fila.c
 
 ep1.o: main.c
 	gcc -c ep1.c
